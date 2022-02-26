@@ -4,7 +4,6 @@
 bigInteger::bigInteger(){ curr="0"; validate(); }
 bigInteger::bigInteger(std::string& str){ curr=str; validate(); }
 bigInteger::bigInteger(const char* ch){ curr=ch; validate(); }
-// bigInteger(char ch){ curr=ch; }
 bigInteger::bigInteger(int n){
     if(n<0){
         negative=true;
@@ -29,9 +28,6 @@ void bigInteger::reverse(){
     for(int i=0;i<curr.size()/2;i++)
         std::swap(curr[i],curr[curr.size()-i-1]);
 }
-
-
-
 //COMPARISON OPERATORS
 bool bigInteger::operator ==(bigInteger&b){
     if(curr[0]=='0'&&b[0]=='0'&&curr.size()==1&&b.size()==1)
@@ -103,7 +99,7 @@ bool bigInteger::operator !=(bigInteger&b){
     return true;
 }
 //ARITHEMATIC OPERATORS
-bigInteger& bigInteger::operator +=(bigInteger&b){//ChECKED
+bigInteger& bigInteger::operator +=(bigInteger&b){
     if(negative){
         if(b.negative){
             addAB(*this,b);
@@ -134,7 +130,7 @@ bigInteger& bigInteger::operator +=(bigInteger&b){//ChECKED
     }
     validate();
 }
-bigInteger& bigInteger::operator -=(bigInteger&b){//CHECKED
+bigInteger& bigInteger::operator -=(bigInteger&b){
     if(b.negative)
         b.negative=false;
     else
@@ -145,7 +141,7 @@ bigInteger& bigInteger::operator -=(bigInteger&b){//CHECKED
     else
         b.negative=true;
 }
-bigInteger& bigInteger::operator *=(bigInteger&b){//CHECKED
+bigInteger& bigInteger::operator *=(bigInteger&b){
     bigInteger ans=(*this)*b;
     *this=ans;
 }
@@ -155,19 +151,19 @@ bigInteger& bigInteger::operator /=(bigInteger&b){
 bigInteger& bigInteger::operator %=(bigInteger&b){
     *this=(*this)%b;
 }
-bigInteger bigInteger::operator +(bigInteger& b){//CHECKED
+bigInteger bigInteger::operator +(bigInteger& b){
     bigInteger ans;
     ans+=(*this);
     ans+=b;
     return ans;
 }
-bigInteger bigInteger::operator -(bigInteger& b){//CHECKED
+bigInteger bigInteger::operator -(bigInteger& b){
     bigInteger ans;
     ans+=(*this);
     ans-=b;
     return ans;
 }
-bigInteger bigInteger::operator *(bigInteger&b){//CHECKED
+bigInteger bigInteger::operator *(bigInteger&b){
     bigInteger ans;
     if((curr[0]=='0'&&curr.size()==1)||(b[0]=='0'&&b.size()==1)){
         ans.curr="0";
@@ -201,7 +197,7 @@ bigInteger bigInteger::operator *(bigInteger&b){//CHECKED
     ans.reverse();
     return ans;
 }
-bigInteger bigInteger::operator /(bigInteger&div){//CHECKED
+bigInteger bigInteger::operator /(bigInteger&div){
     bigInteger ans,b;
     b.curr=div.curr;
     if(b[0]=='0'&&b.size()==1){
@@ -247,7 +243,7 @@ bigInteger bigInteger::operator %(bigInteger&b){
     return (*this)-quotient;
 }
 //OVERLOADING COUT OPERATOR
-std::ostream& operator <<(std::ostream& os,bigInteger a){//CHECKED
+std::ostream& operator <<(std::ostream& os,bigInteger a){
     if(a.negative)
         os<<'-';
     os<<a.curr;
